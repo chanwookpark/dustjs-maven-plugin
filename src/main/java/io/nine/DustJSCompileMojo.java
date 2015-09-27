@@ -1,5 +1,6 @@
 package io.nine;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -9,7 +10,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,26 +42,32 @@ public class DustJSCompileMojo extends AbstractMojo {
     private DustCompiler dustCompiler = new DustCompiler();
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("[DustJS Pre-Compiler] Source Directory: " + sourceDirectory + ", Target Directory: " + targetDirectory);
+        getLog().info("DustJS Pre-Compiler Source Directory: " + sourceDirectory + ", Target Directory: " + targetDirectory);
 
+        // Step 1. Load to compile
         loadScript();
 
-        Map<String, String> compiledMap = compileTemplate();
-
-        createCompieldFile(compiledMap);
+        // Step 2. Find template file and compile, then create compiled file
+        Map<String, String> compiledTemplateMap = compileTemplate();
+        createCompiledFile(compiledTemplateMap);
 
         getLog().info("DustJS Pre-Compile OK!");
     }
 
-    protected void createCompieldFile(Map<String, String> compiledMap) {
+    protected void createCompiledFile(Map<String, String> compiledMap) {
+        // Step 1. Directory cleaning..
         try {
-            final Path targetPath = Paths.get(targetDirectory);
-            Files.deleteIfExists(targetPath);
-            Files.createDirectories(targetPath);
+            FileUtils.deleteDirectory(new File(targetDirectory));
+            Files.createDirectories(Paths.get(targetDirectory));
+
+            if (getLog().isDebugEnabled()) {
+                getLog().debug("Cleansing target directory!(" + targetDirectory + ")");
+            }
         } catch (IOException ioe) {
             throw new DustJSCompileException("Error when create compiled template file!", ioe);
         }
 
+        // Step 2. Create file..
         for (Map.Entry<String, String> e : compiledMap.entrySet()) {
             try {
                 String fileName = targetDirectory + File.separator + e.getKey() + ".js";

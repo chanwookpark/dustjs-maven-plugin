@@ -44,6 +44,12 @@
             <!-- FIXME provided로 하면 dust 파일을 찾지 못해 에러 발생 -->
             <!--<scope>provided</scope>-->
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
