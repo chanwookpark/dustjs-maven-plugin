@@ -22,3 +22,6 @@ Especially, support to pre-compile partial template.
     </executions>
 </plugin>
 ```
+
+Sample project is [here](https://github.com/chanwookpark/spirng-boot-sample-web-dustjs).
+
