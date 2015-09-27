@@ -2,7 +2,7 @@
 
 Especially, support to pre-compile partial template.
 
-[code]
+```xml 
 <plugin>
     <groupId>io.nine</groupId>
     <artifactId>dustjs-maven-plugin</artifactId>
@@ -21,4 +21,4 @@ Especially, support to pre-compile partial template.
         </execution>
     </executions>
 </plugin>
-[code]
+```
