@@ -1,4 +1,4 @@
-package io.nine;
+package io.nine.dustjs.mavenplugin;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;

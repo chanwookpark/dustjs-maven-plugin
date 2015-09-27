@@ -1,4 +1,4 @@
-package io.nine;
+package io.nine.dustjs.mavenplugin;
 
 import org.apache.maven.plugin.logging.Log;
 

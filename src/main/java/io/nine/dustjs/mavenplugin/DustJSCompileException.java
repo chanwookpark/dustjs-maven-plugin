@@ -1,4 +1,4 @@
-package io.nine;
+package io.nine.dustjs.mavenplugin;
 
 /**
  * @author chanwook
