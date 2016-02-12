@@ -93,11 +93,12 @@ public class DustJSCompileMojo extends AbstractMojo {
 
         Map<String, String> compiledMap = new HashMap<>();
         for (File template : dir.listFiles()) {
-            if (getLog().isDebugEnabled()) {
-                getLog().debug("Load DustJS template[" + template.getName() + "]");
-            }
             final String templateKey = getTemplateKey(template);
             final String compiled = dustCompiler.compile(templateKey, template, getLog());
+
+            if(getLog().isDebugEnabled()) {
+                getLog().debug("DustJS Template: " + templateKey +"\n" + compiled);
+            }
             compiledMap.put(templateKey, compiled);
         }
         return compiledMap;
