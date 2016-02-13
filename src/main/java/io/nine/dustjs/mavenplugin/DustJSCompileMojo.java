@@ -49,9 +49,12 @@ public class DustJSCompileMojo extends AbstractMojo {
 
         // Step 2. Find template file and compile, then create compiled file
         Map<String, String> compiledTemplateMap = compileTemplate();
-        createCompiledFile(compiledTemplateMap);
-
-        getLog().info("DustJS Pre-Compile OK!");
+        if (compiledTemplateMap != null) {
+            createCompiledFile(compiledTemplateMap);
+            getLog().info("DustJS Pre-Compile OK!");
+        } else {
+            getLog().info("Do not exist folder, then do not execute next process!");
+        }
     }
 
     protected void createCompiledFile(Map<String, String> compiledMap) {
@@ -84,7 +87,8 @@ public class DustJSCompileMojo extends AbstractMojo {
     protected Map<String, String> compileTemplate() {
         final File dir = new File(sourceDirectory);
         if (dir == null || !dir.isDirectory()) {
-            throw new DustJSCompileException("Not found source direct(source: " + sourceDirectory + ")");
+            // do not process anymore!
+            return null;
         }
 
         if (getLog().isInfoEnabled()) {
@@ -96,8 +100,8 @@ public class DustJSCompileMojo extends AbstractMojo {
             final String templateKey = getTemplateKey(template);
             final String compiled = dustCompiler.compile(templateKey, template, getLog());
 
-            if(getLog().isDebugEnabled()) {
-                getLog().debug("DustJS Template: " + templateKey +"\n" + compiled);
+            if (getLog().isDebugEnabled()) {
+                getLog().debug("DustJS Template: " + templateKey + "\n" + compiled);
             }
             compiledMap.put(templateKey, compiled);
         }
