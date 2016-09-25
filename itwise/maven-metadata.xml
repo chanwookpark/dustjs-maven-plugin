@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <plugins>
+    <plugin>
+      <name>Dustjs compiler on maven build</name>
+      <prefix>dustjs-maven-plugin</prefix>
+      <artifactId>dustjs-maven-plugin</artifactId>
+    </plugin>
+  </plugins>
+</metadata>
